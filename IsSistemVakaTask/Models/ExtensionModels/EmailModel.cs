@@ -1,4 +1,4 @@
-﻿namespace IsSistemVakaTask.Models.Dtos
+﻿namespace IsSistemVakaTask.Models.ExtensionModels
 {
     public record EmailModel
     {

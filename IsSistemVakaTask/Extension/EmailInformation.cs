@@ -1,4 +1,6 @@
-﻿namespace IsSistemVakaTask.Extension
+﻿using IsSistemVakaTask.Models.ExtensionModels;
+
+namespace IsSistemVakaTask.Extension
 {
     public static class EmailInformation
     {
@@ -12,11 +14,13 @@
                 .Build();
         }
 
-        public static (string,string) GetEmailInformation()
+        public static EmailInformationModel GetEmailInformation()
         {
-            var Email = _configuration["EmailSettings:Email"];
-            var Password = _configuration["EmailSettings:Password"];
-            return (Email, Password);
+            return new EmailInformationModel()
+            {
+                EmailAddress = _configuration["EmailSettings:Email"],
+                Password = _configuration["EmailSettings:Password"]
+            };
         }
     }
 }

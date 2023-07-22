@@ -1,7 +1,7 @@
-﻿using IsSistemVakaTask.Models.Dtos;
-using IsSistemVakaTask.Services.Interfaces;
+﻿using IsSistemVakaTask.Services.Interfaces;
 using System.Net.Mail;
 using System.Net;
+using IsSistemVakaTask.Models.ExtensionModels;
 
 namespace IsSistemVakaTask.Services
 {
@@ -12,8 +12,8 @@ namespace IsSistemVakaTask.Services
             try
             {
                 var modelEmail = Extension.EmailInformation.GetEmailInformation();
-                var senderEmail = modelEmail.Item1;
-                var senderPassword = modelEmail.Item2;
+                var senderEmail = modelEmail.EmailAddress;
+                var senderPassword = modelEmail.Password;
                 string senderHost = "smtp.gmail.com";
                 int senderPort = 587;
                 bool enableSsl = true;

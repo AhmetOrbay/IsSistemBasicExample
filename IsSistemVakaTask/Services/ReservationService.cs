@@ -2,6 +2,7 @@
 using IsSistemVakaTask.Models.Entities;
 using IsSistemVakaTask.Services.Interfaces;
 using IsSistemVakaTask.Repositories.Interfaces;
+using IsSistemVakaTask.Models.ExtensionModels;
 using AutoMapper;
 
 namespace IsSistemVakaTask.Services
@@ -23,20 +24,6 @@ namespace IsSistemVakaTask.Services
             _EmailService = emailService;
         }
 
-        public async Task<ResultModel<ReservationDto>> CreateReservation(Reservation reservation)
-        {
-            var result = new ResultModel<ReservationDto>();
-            try
-            {
-                var response =  await _reservationRepo.SaveReservation(reservation);
-                result.Data = _mapper.Map<ReservationDto>(response);
-            }
-            catch (Exception ex)
-            {
-                result.ErrorMessages = new List<string> { $"Error Create reservation : {ex.Message}" };
-            }
-            return result;
-        }
 
         /// <summary>
         /// Make Reservation
@@ -66,23 +53,24 @@ namespace IsSistemVakaTask.Services
 
                 
                 // Send Email
-                var email = $"Sayın {reservationMake.CustomerName}, rezervasyonunuz başarıyla alındı. Masa No: {table.Number}, Tarih: {reservationMake.ReservationDate}, Kişi Sayısı: {reservationMake.NumberOfGuests}";
-                var EmailResponse = _EmailService.SendEmail(new EmailModel
-                {
-                    Message = "Rezervasyon Onayı",
-                    Recipient = reservationMake.CustomerEmail,
-                    Subject = email
-                });
+                //var email = $"Sayın {reservationMake.CustomerName}, rezervasyonunuz başarıyla alındı. Masa No: {table.Number}, Tarih: {reservationMake.ReservationDate}, Kişi Sayısı: {reservationMake.NumberOfGuests}";
+                //var EmailResponse = _EmailService.SendEmail(new EmailModel
+                //{
+                //    Message = "Rezervasyon Onayı",
+                //    Recipient = reservationMake.CustomerEmail,
+                //    Subject = email
+                //});
 
 
                 //Email Status
-                if (EmailResponse)
+                if (true)
                 {
                     //Save reservation
                     var resultEntity = await CreateReservation(reservation);
                     if (resultEntity.IsSuccess)
                     {
-                        result.Data = _mapper.Map<ReservationDto>(resultEntity);
+                        result.Data = _mapper.Map<ReservationDto>(resultEntity.Data);
+
                         //update table status
                         await _tableService.UpdateTableStatus(table.Id);
                     }
@@ -94,6 +82,28 @@ namespace IsSistemVakaTask.Services
             catch (Exception ex)
             {
                 result.ErrorMessages = new List<string> { $"Error Messages : {ex.Message}" };
+            }
+            return result;
+        }
+
+
+
+        /// <summary>
+        /// record in reservation table
+        /// </summary>
+        /// <param name="reservation"></param>
+        /// <returns></returns>
+        public async Task<ResultModel<ReservationDto>> CreateReservation(Reservation reservation)
+        {
+            var result = new ResultModel<ReservationDto>();
+            try
+            {
+                var response = await _reservationRepo.SaveReservation(reservation);
+                result.Data = _mapper.Map<ReservationDto>(response);
+            }
+            catch (Exception ex)
+            {
+                result.ErrorMessages = new List<string> { $"Error Create reservation : {ex.Message}" };
             }
             return result;
         }

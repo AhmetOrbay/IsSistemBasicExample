@@ -16,10 +16,11 @@ namespace IsSistemVakaTask.Controllers
         }
 
         [HttpPost("MakeReservation")]
-        public async Task<ResultModel<ReservationDto>> GetMakeReservation(ReservationMakeDto reservationMake)
+        public async Task<IActionResult> GetMakeReservation(ReservationMakeDto reservationMake)
         {
             var result = await _reservationService.MakeReservation(reservationMake);
-            return result;
+            if(!result.IsSuccess) return BadRequest(result);
+            return Ok(result);
         }
     }
 }

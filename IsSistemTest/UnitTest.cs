@@ -1,5 +1,5 @@
 ﻿using IsSistemVakaTask.Models.Dtos;
-using IsSistemVakaTask.Services;
+using IsSistemVakaTask.Models.ExtensionModels;
 using IsSistemVakaTask.Services.Interfaces;
 using Moq;
 

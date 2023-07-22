@@ -1,5 +1,5 @@
-﻿using IsSistemVakaTask.Models.Dtos;
-using IsSistemVakaTask.Models.Entities;
+﻿using IsSistemVakaTask.Models.Entities;
+using IsSistemVakaTask.Models.ExtensionModels;
 using IsSistemVakaTask.Repositories.Interfaces;
 
 namespace IsSistemVakaTask.Services.Interfaces
