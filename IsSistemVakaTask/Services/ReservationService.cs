@@ -35,7 +35,7 @@ namespace IsSistemVakaTask.Services
             var result = new ResultModel<ReservationDto>();
             try
             {
-                //Checking table status and Number Of f Guest
+                //Checking table status and Number Of Guest
                 var tables = await _tableService.GetTables(reservationMake.NumberOfGuests);
                 if (!tables.IsSuccess)
                 {
@@ -51,19 +51,19 @@ namespace IsSistemVakaTask.Services
                     TableNumber = table.Number
                 };
 
-                
-                // Send Email
-                //var email = $"Sayın {reservationMake.CustomerName}, rezervasyonunuz başarıyla alındı. Masa No: {table.Number}, Tarih: {reservationMake.ReservationDate}, Kişi Sayısı: {reservationMake.NumberOfGuests}";
-                //var EmailResponse = _EmailService.SendEmail(new EmailModel
-                //{
-                //    Message = "Rezervasyon Onayı",
-                //    Recipient = reservationMake.CustomerEmail,
-                //    Subject = email
-                //});
+
+                //Send Email
+                var email = $"Sayın {reservationMake.CustomerName}, rezervasyonunuz başarıyla alındı. Masa No: {table.Number}, Tarih: {reservationMake.ReservationDate}, Kişi Sayısı: {reservationMake.NumberOfGuests}";
+                var EmailResponse = _EmailService.SendEmail(new EmailModel
+                {
+                    Message = "Rezervasyon Onayı",
+                    Recipient = reservationMake.CustomerEmail,
+                    Subject = email
+                });
 
 
                 //Email Status
-                if (true)
+                if (EmailResponse)
                 {
                     //Save reservation
                     var resultEntity = await CreateReservation(reservation);
