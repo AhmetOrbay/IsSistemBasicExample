@@ -6,7 +6,6 @@
 
         static EmailInformation()
         {
-            // appsettings.json dosyasını yükleyin
             _configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .Build();
